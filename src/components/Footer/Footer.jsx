@@ -105,52 +105,36 @@ function Footer({ activeCollection, onSelectCollection }) {
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('women');
-                  }}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors cursor-pointer" 
-                  data-discover="true"
+                <button
+                  onClick={() => scrollToSection('women')}
+                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Women
-                </a>
+                </button>
               </li>
               <li>
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('men');
-                  }}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors cursor-pointer" 
-                  data-discover="true"
+                <button
+                  onClick={() => scrollToSection('men')}
+                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Men
-                </a>
+                </button>
               </li>
               <li>
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('kids');
-                  }}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors cursor-pointer" 
-                  data-discover="true"
+                <button
+                  onClick={() => scrollToSection('kids')}
+                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Kids
-                </a>
+                </button>
               </li>
               <li>
-                <a 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('collections');
-                  }}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors cursor-pointer" 
-                  data-discover="true"
+                <button
+                  onClick={() => scrollToSection('collections')}
+                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Collections
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -168,7 +152,7 @@ function Footer({ activeCollection, onSelectCollection }) {
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="#" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" aria-hidden="true">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>

@@ -4,8 +4,6 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-ro
 import Navbar from './components/Navbar.jsx/Nvbar';
 import Home from './components/Home/Home';
 import Footer from './components/Footer/Footer';
-import ProductLanding from './components/Product/ProductLanding';
-import ProductGallery from './components/Product/ProductGallery';
 import ProductShoes from './components/Product/ProductShoes';
 import ProductBags from './components/Product/ProductBags';
 import ProductClothes from './components/Product/ProductClothes';
