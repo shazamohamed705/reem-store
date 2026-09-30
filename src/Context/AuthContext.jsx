@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { login as loginRequest, logout as logoutRequest } from "../api/auth"; // تأكدي المسار
+import { login as loginRequest } from "../api/auth"; // تأكدي المسار
 
 const AuthContext = createContext();
 

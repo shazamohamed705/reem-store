@@ -16,7 +16,7 @@ const baseSlides = [
 function Banner({ activeCollection, onOpenItem }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [categoryImages, setCategoryImages] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
 
   const { categories, loading: categoriesLoading } = useCategories();
 
