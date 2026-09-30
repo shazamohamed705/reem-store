@@ -1,6 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSocialLinks } from '../../hooks/useSocialLinks';
 
 function Footer({ activeCollection, onSelectCollection }) {
+  const navigate = useNavigate();
+  const { socialLinks } = useSocialLinks();
   const scrollToSection = (sectionId) => {
     // If we're on a collection page (women, men, kids), go back to default first
     if (['women', 'men', 'kids'].includes(activeCollection)) {
@@ -26,88 +30,149 @@ function Footer({ activeCollection, onSelectCollection }) {
   };
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-200">
+    <footer className="bg-white border-t border-gray-200">
       {/* Shop By Category Section */}
-      <div className="bg-white border-b border-gray-200 py-6 sm:py-8">
+      <div className="bg-white py-20">
         <div className="max-w-screen-xl mx-auto px-3 sm:px-4 lg:px-8">
-          <h3 className="text-sm sm:text-base font-light tracking-widest uppercase text-gray-900 text-center mb-4 sm:mb-6">
-            Shop By Category
-          </h3>
-          <div className="flex flex-col gap-3 sm:gap-4 max-w-md mx-auto">
-            <button 
+          <div className="text-center mb-16">
+            <h3 className="text-4xl md:text-5xl font-normal tracking-wide mb-4 text-gray-900">
+              Shop By Category
+            </h3>
+            <div className="w-24 h-1 bg-gray-900 mx-auto"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <button
               onClick={() => scrollToSection('women')}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-4 sm:py-5 text-sm sm:text-base font-light tracking-widest uppercase transition-all duration-300"
+              className="group relative overflow-hidden bg-gray-50 hover:bg-gray-900 transition-all duration-500 p-12 border-2 border-gray-200 hover:border-gray-900"
             >
-              Women
+              <div className="relative z-10">
+                <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
+                  Women
+                </h3>
+                <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
+                  Elegant & Stylish
+                </p>
+                <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 transform scale-0 group-hover:scale-100 transition-transform duration-500 origin-center"></div>
             </button>
-            <button 
+            
+            <button
               onClick={() => scrollToSection('men')}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-4 sm:py-5 text-sm sm:text-base font-light tracking-widest uppercase transition-all duration-300"
+              className="group relative overflow-hidden bg-gray-50 hover:bg-gray-900 transition-all duration-500 p-12 border-2 border-gray-200 hover:border-gray-900"
             >
-              Men
+              <div className="relative z-10">
+                <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
+                  Men
+                </h3>
+                <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
+                  Classic & Modern
+                </p>
+                <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 transform scale-0 group-hover:scale-100 transition-transform duration-500 origin-center"></div>
             </button>
-            <button 
+            
+            <button
               onClick={() => scrollToSection('kids')}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-4 sm:py-5 text-sm sm:text-base font-light tracking-widest uppercase transition-all duration-300"
+              className="group relative overflow-hidden bg-gray-50 hover:bg-gray-900 transition-all duration-500 p-12 border-2 border-gray-200 hover:border-gray-900"
             >
-              Kids
+              <div className="relative z-10">
+                <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
+                  Kids
+                </h3>
+                <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
+                  Fun & Comfortable
+                </p>
+                <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 transform scale-0 group-hover:scale-100 transition-transform duration-500 origin-center"></div>
+            </button>
+            
+            <button
+              onClick={() => scrollToSection('collections')}
+              className="group relative overflow-hidden bg-gray-50 hover:bg-gray-900 transition-all duration-500 p-12 border-2 border-gray-200 hover:border-gray-900"
+            >
+              <div className="relative z-10">
+                <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
+                  All
+                </h3>
+                <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
+                  Browse Everything
+                </p>
+                <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 transform scale-0 group-hover:scale-100 transition-transform duration-500 origin-center"></div>
             </button>
           </div>
         </div>
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-screen-xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12 lg:py-16">
+      <div className="max-w-screen-xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12 lg:py-16 border-t border-gray-200">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
-          {/* About Reem Store */}
+          {/* About Mezna Store */}
           <div className="col-span-2 lg:col-span-1">
-            <h3 className="text-xs sm:text-sm font-light tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
-              About Reem Store
+            <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
+              About Mezna Store
             </h3>
-            <p className="text-xs sm:text-sm font-light text-gray-600 leading-relaxed">
+            <p className="text-xs sm:text-sm font-normal text-gray-800 leading-relaxed">
               Premium quality, authentic products identical to originals. Experience luxury with our curated collections.
             </p>
           </div>
 
           {/* Customer Service */}
           <div>
-            <h3 className="text-xs sm:text-sm font-light tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
+            <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
               Customer Service
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors" href="/contact" data-discover="true">
+                <button
+                  onClick={() => navigate('/page/contact')}
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
+                >
                   Contact Us
-                </a>
+                </button>
               </li>
               <li>
-                <a className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors" href="/shipping" data-discover="true">
+                <button
+                  onClick={() => navigate('/page/shipping')}
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
+                >
                   Shipping
-                </a>
+                </button>
               </li>
               <li>
-                <a className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors" href="/returns" data-discover="true">
+                <button
+                  onClick={() => navigate('/page/returns')}
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
+                >
                   Returns
-                </a>
+                </button>
               </li>
               <li>
-                <a className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors" href="/faq" data-discover="true">
+                <button
+                  onClick={() => navigate('/page/faq')}
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
+                >
                   FAQ
-                </a>
+                </button>
               </li>
             </ul>
           </div>
 
           {/* Shop */}
           <div>
-            <h3 className="text-xs sm:text-sm font-light tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
+            <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
               Shop
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <button
                   onClick={() => scrollToSection('women')}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Women
                 </button>
@@ -115,7 +180,7 @@ function Footer({ activeCollection, onSelectCollection }) {
               <li>
                 <button
                   onClick={() => scrollToSection('men')}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Men
                 </button>
@@ -123,7 +188,7 @@ function Footer({ activeCollection, onSelectCollection }) {
               <li>
                 <button
                   onClick={() => scrollToSection('kids')}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Kids
                 </button>
@@ -131,7 +196,7 @@ function Footer({ activeCollection, onSelectCollection }) {
               <li>
                 <button
                   onClick={() => scrollToSection('collections')}
-                  className="text-xs sm:text-sm font-light text-gray-600 hover:text-gray-900 transition-colors text-left w-full"
+                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
                   Collections
                 </button>
@@ -141,36 +206,115 @@ function Footer({ activeCollection, onSelectCollection }) {
 
           {/* Connect */}
           <div className="col-span-2 lg:col-span-1">
-            <h3 className="text-xs sm:text-sm font-light tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
+            <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
               Connect
             </h3>
             <div className="flex gap-3 sm:gap-4 mb-4 sm:mb-6">
-              <a href="https://instagram.com/reem.store7777" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" aria-hidden="true">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                </svg>
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" aria-hidden="true">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-              </a>
+              {socialLinks.instagram && (
+                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" aria-hidden="true">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                  </svg>
+                </a>
+              )}
+              {socialLinks.whatsapp && (
+                <a href={socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-green-50 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                  </svg>
+                </a>
+              )}
+              {socialLinks.facebook && (
+                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-blue-50 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" aria-hidden="true">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+              )}
+              {socialLinks.twitter && (
+                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              )}
+              {socialLinks.tiktok && (
+                <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-gray-200 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-900" aria-hidden="true">
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                  </svg>
+                </a>
+              )}
+              {socialLinks.youtube && (
+                <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-red-50 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" aria-hidden="true">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </a>
+              )}
+              {socialLinks.snapchat && (
+                <a href={socialLinks.snapchat} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-yellow-50 rounded-lg transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" aria-hidden="true">
+                    <path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12.375-.164.57-.029.179-.074.36-.134.553-.076.271-.27.405-.555.405h-.03c-.135 0-.313-.031-.538-.074-.36-.075-.765-.135-1.273-.135-.3 0-.599.015-.913.074-.6.104-1.123.464-1.723.884-.853.599-1.826 1.288-3.294 1.288-.06 0-.119-.015-.18-.015h-.149c-1.468 0-2.427-.675-3.279-1.288-.599-.42-1.107-.779-1.707-.884-.314-.045-.629-.074-.928-.074-.54 0-.958.089-1.272.149-.211.043-.391.074-.54.074-.374 0-.523-.224-.583-.42-.061-.192-.09-.389-.135-.567-.046-.181-.105-.494-.166-.57-1.918-.222-2.95-.642-3.189-1.226-.031-.063-.052-.15-.055-.225-.015-.243.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.02l.016-.029c.18-.345.224-.645.119-.869-.195-.434-.884-.658-1.332-.809-.121-.029-.24-.074-.346-.119-1.107-.435-1.257-.93-1.197-1.273.09-.479.674-.793 1.168-.793.146 0 .27.029.383.074.42.194.789.3 1.104.3.234 0 .384-.06.465-.105l-.046-.569c-.098-1.626-.225-3.651.307-4.837C7.392 1.077 10.739.807 11.727.807l.419-.015h.06z"/>
+                  </svg>
+                </a>
+              )}
             </div>
-            <p className="text-xs sm:text-sm font-light text-gray-600 mb-2">
+            <p className="text-xs sm:text-sm font-normal text-gray-800 mb-2">
               Cash on Delivery Available
             </p>
-            <p className="text-xs sm:text-sm font-light text-gray-600">
+            <p className="text-xs sm:text-sm font-normal text-gray-800 mb-6">
               Easy Returns Within 3 Days T&C Applied
             </p>
+            
+            {/* Payment Methods */}
+            <div className="mt-6">
+              <h4 className="text-xs font-medium tracking-widest uppercase text-gray-900 mb-3">
+                We Accept
+              </h4>
+              <div className="flex flex-wrap gap-4">
+                {/* Payment Icons */}
+                <div className="transition-transform duration-300 hover:scale-110 cursor-pointer">
+                  <img 
+                    src="/Screenshot 2026-02-25 161629.png" 
+                    alt="Payment Method" 
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
+                
+                <div className="transition-transform duration-300 hover:scale-110 cursor-pointer">
+                  <img 
+                    src="/Screenshot 2026-02-25 161621.png" 
+                    alt="Payment Method" 
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
+                
+                <div className="transition-transform duration-300 hover:scale-110 cursor-pointer">
+                  <img 
+                    src="/Screenshot 2026-02-25 161613.png" 
+                    alt="Payment Method" 
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
+                <div className="transition-transform duration-300 hover:scale-110 cursor-pointer">
+                  <img 
+                    src="Screenshot 2026-02-26 103448.png" 
+                    alt="Payment Method" 
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
-          <p className="text-xs font-light text-gray-500 text-center">
-            © 2025 Reem Store. All rights reserved.
+          <p className="text-xs font-normal text-gray-700 text-center">
+            © 2025 Mezna Store. All rights reserved.
           </p>
         </div>
       </div>

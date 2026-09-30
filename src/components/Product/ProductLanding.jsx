@@ -37,7 +37,7 @@ function ProductLanding({ item, onBack, onOpenShoes, onOpenBags, onOpenClothes }
               onClick={onBack}
               className="text-lg font-bold tracking-widest text-gray-900"
             >
-              REEM STORE
+              MEZNA STORE
             </button>
           </div>
           <div className="hidden sm:flex items-center gap-2 flex-1">

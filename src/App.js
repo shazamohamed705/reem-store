@@ -1,14 +1,23 @@
 import './App.css';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+// أعلى App.js
+import { AuthProvider } from './Context/AuthContext';
+import MetaPixel from './components/MetaPixel';
+import SEO from './components/SEO';
+
 import Navbar from './components/Navbar.jsx/Nvbar';
 import Home from './components/Home/Home';
 import Footer from './components/Footer/Footer';
+import ProductPage from './components/Product/ProductPage';
 import ProductShoes from './components/Product/ProductShoes';
 import ProductBags from './components/Product/ProductBags';
 import ProductClothes from './components/Product/ProductClothes';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import PageContent from './components/Pages/PageContent';
+import ContactPage from './components/Pages/ContactPage';
 
 function AppContent() {
   const [activeCollection, setActiveCollection] = useState('default');
@@ -17,16 +26,9 @@ function AppContent() {
   const background = location.state && location.state.backgroundLocation;
 
   const handleOpenItem = (item) => {
-    // Determine which page to open based on item name
-    const itemName = item?.name?.toLowerCase() || '';
-    
-    if (itemName.includes('shoes') || itemName.includes('shoe')) {
-      navigate('/shoes');
-    } else if (itemName.includes('bag') || itemName.includes('handbag') || itemName.includes('wallet') || itemName.includes('trolley')) {
-      navigate('/bags');
-    } else {
-      // Default to clothes for other items
-      navigate('/clothes');
+    // Navigate to product page with product ID
+    if (item && item.id) {
+      navigate(`/product/${item.id}`);
     }
   };
 
@@ -49,6 +51,7 @@ function AppContent() {
 
   return (
     <div className="bg-white">
+      <SEO pageKey="home" />
       <Routes location={background || location}>
         <Route path="/" element={
           <>
@@ -66,6 +69,7 @@ function AppContent() {
             />
           </>
         } />
+        <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/shoes" element={
           <ProductShoes 
             onBack={handleBackHome}
@@ -92,6 +96,8 @@ function AppContent() {
         } />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/page/contact" element={<ContactPage />} />
+        <Route path="/page/:pageKey" element={<PageContent />} />
       </Routes>
       {background && (
         <Routes>
@@ -105,9 +111,14 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <MetaPixel />
+          <AppContent />
+        </AuthProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

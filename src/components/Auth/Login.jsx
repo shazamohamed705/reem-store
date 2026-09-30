@@ -1,18 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext'; // تأكدي المسار صح
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.backgroundLocation;
 
+  const { login, user } = useAuth(); // إضافة user للمراقبة
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // مراقبة تغيير حالة المستخدم
+  useEffect(() => {
+    if (user && (user.name || user.email)) {
+      console.log("User logged in, navigating to home");
+      // التأكد من الذهاب للـ home بدلاً من الرجوع للصفحة السابقة
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
+
   const handleClose = () => {
-    if (background) {
+    // إذا كان المستخدم مسجل دخول، نروح للـ home
+    if (user && (user.name || user.email)) {
+      navigate('/', { replace: true });
+    } else if (background) {
       navigate(-1);
     } else {
       navigate('/');
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+  
+    console.log("Submitting login with:", formData); // البيانات قبل الإرسال
+  
+    try {
+      const res = await login(formData); 
+      console.log("Login success:", res.data); // لما تسجيل الدخول ينجح
+      
+      // لا نحتاج لإغلاق المودال هنا لأن useEffect سيتولى ذلك
+      // عند تحديث user state
+      
+    } catch (err) {
+      console.log("Login failed:", err.response?.data || err);
+      setError(
+        err.response?.data?.message || 'Login failed, please check your credentials'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -23,21 +66,16 @@ function Login() {
           className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
           aria-label="Close"
         >
+          {/* SVG X icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
             className="h-5 w-5 text-gray-600"
-            aria-hidden="true"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
           >
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
@@ -53,97 +91,55 @@ function Login() {
 
         {/* Form */}
         <div className="p-8">
-          <form className="space-y-5">
-            {/* Email Field */}
-            <div>
-              <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-mail absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                >
-                  <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
-                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                </svg>
-                <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="your@email.com"
-                  type="email"
-                  name="email"
-                />
-              </div>
-            </div>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <input
+              required
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className="w-full pl-11 pr-4 py-3 border border-gray-300 text-sm font-light"
+            />
 
-            {/* Password Field */}
-            <div>
-              <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-lock absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                >
-                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="Enter your password"
-                  type="password"
-                  name="password"
-                />
-              </div>
-            </div>
+            <input
+              required
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              className="w-full pl-11 pr-4 py-3 border border-gray-300 text-sm font-light"
+            />
 
-            {/* Forgot Password */}
-            <div className="flex justify-end">
-              <button
-                type="button"
-                className="text-xs font-light text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                Forgot Password?
-              </button>
-            </div>
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
 
-            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors"
+              disabled={loading}
+              className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors disabled:opacity-50"
             >
-              Sign In
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
-          {/* Sign Up Link */}
+          {/* Sign Up */}
           <div className="mt-6 text-center">
             <p className="text-sm font-light text-gray-600">
               Don't have an account?
               <button
                 type="button"
-                onClick={() => navigate('/signup', { state: { backgroundLocation: background || location } })}
+                onClick={() =>
+                  navigate('/signup', {
+                    state: { backgroundLocation: background || location },
+                  })
+                }
                 className="ml-2 text-gray-900 hover:underline font-normal"
               >
                 Sign Up
@@ -157,4 +153,3 @@ function Login() {
 }
 
 export default Login;
-

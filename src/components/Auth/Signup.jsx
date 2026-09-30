@@ -1,22 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { register } from "../../api/auth";
+
 
 function Signup() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
+  
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.backgroundLocation;
 
   const closeModal = () => {
-    if (background) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
+    // الذهاب للـ home مباشرة بدلاً من الرجوع
+    navigate('/', { replace: true });
   };
 
-  const goToLogin = () => {
-    navigate('/login', { state: { backgroundLocation: background || location } });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+  
+    try {
+      const res = await register(formData);
+      console.log("REGISTER SUCCESS", res.data);
+  
+      // ✅ لو التسجيل ناجح، نروح للـ login بدون background ونمسح الـ history
+      navigate("/login", { replace: true });
+  
+    } catch (err) {
+      // ✅ لو في خطأ، نظهره وما نغيّرش الصفحة
+      setError(
+        err.response?.data?.message || "Something went wrong"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -49,13 +77,13 @@ function Signup() {
             Create Account
           </h2>
           <p className="text-sm font-light text-gray-600">
-            Join Reem Store for exclusive access
+            Join Mezna Store for exclusive access
           </p>
         </div>
 
         <div className="p-8">
-          <form className="space-y-5">
-            <div>
+        <form className="space-y-5" onSubmit={handleSubmit}>
+        <div>
               <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
                 Full Name
               </label>
@@ -77,12 +105,16 @@ function Signup() {
                   <circle cx="12" cy="7" r="4" />
                 </svg>
                 <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="John Doe"
-                  type="text"
-                  name="name"
-                />
+  required
+  name="name"
+  value={formData.name}
+  onChange={(e) =>
+    setFormData({ ...formData, name: e.target.value })
+  }
+  className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
+  placeholder="John Doe"
+/>
+
               </div>
             </div>
 
@@ -108,44 +140,21 @@ function Signup() {
                   <rect x="2" y="4" width="20" height="16" rx="2" />
                 </svg>
                 <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="your@email.com"
-                  type="email"
-                  name="email"
-                />
+  required
+  type="email"
+  name="email"
+  value={formData.email}
+  onChange={(e) =>
+    setFormData({ ...formData, email: e.target.value })
+  }
+  className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
+
+  placeholder="your@email.com"
+/>
+
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Phone Number
-              </label>
-              <div className="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-phone absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                >
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                </svg>
-                <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="+971 XX XXX XXXX"
-                  type="tel"
-                  name="phone"
-                />
-              </div>
-            </div>
 
             <div>
               <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
@@ -169,12 +178,16 @@ function Signup() {
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
                 <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="Create a password"
-                  type="password"
-                  name="password"
-                />
+  required
+  type="password"
+  value={formData.password}
+  onChange={(e) =>
+    setFormData({ ...formData, password: e.target.value })
+  }
+  className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
+placeholder='Create a password'
+/>
+
               </div>
             </div>
 
@@ -200,21 +213,33 @@ function Signup() {
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
                 <input
-                  required
-                  className="w-full pl-11 pr-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent text-sm font-light"
-                  placeholder="Confirm your password"
-                  type="password"
-                  name="confirmPassword"
-                />
+  required
+  type="password"
+  value={formData.password_confirmation}
+  onChange={(e) =>
+    setFormData({ ...formData, password_confirmation: e.target.value })
+  }
+  className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
+
+/>
+
               </div>
             </div>
-
             <button
-              type="submit"
-              className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors"
-            >
-              Create Account
-            </button>
+  type="submit"
+  disabled={loading}
+  className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors disabled:opacity-50"
+>
+  {loading ? "Creating..." : "Create Account"}
+</button>
+
+            
+            {error && (
+  <p className="text-sm text-red-500 text-center">
+    {error}
+  </p>
+)}
+
           </form>
 
           <div className="mt-6 text-center">
@@ -222,11 +247,13 @@ function Signup() {
               Already have an account?
               <button
                 type="button"
-                onClick={goToLogin}
+                onClick={() => navigate('/login', { state: { backgroundLocation: background || location } })}
                 className="ml-2 text-gray-900 hover:underline font-normal"
               >
                 Sign In
               </button>
+
+
             </p>
           </div>
         </div>

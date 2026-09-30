@@ -30,7 +30,7 @@ export const collectionData = {
   collections: {
     image: '/header2.webp',
     title: 'All Collections',
-    description: 'Browse the full REEM STORE collections in one place',
+    description: 'Browse the full MEZNA STORE collections in one place',
     buttonText: 'Explore',
     sectionId: null
   }
