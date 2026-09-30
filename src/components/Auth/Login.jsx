@@ -10,7 +10,7 @@ function Login() {
   const { login, user } = useAuth(); // إضافة user للمراقبة
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // مراقبة تغيير حالة المستخدم
   useEffect(() => {
@@ -35,7 +35,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setIsSubmitting(true);
   
     console.log("Submitting login with:", formData); // البيانات قبل الإرسال
   
@@ -52,7 +52,7 @@ function Login() {
         err.response?.data?.message || 'Login failed, please check your credentials'
       );
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
   
@@ -122,10 +122,10 @@ function Login() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors disabled:opacity-50"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 

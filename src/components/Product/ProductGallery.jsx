@@ -83,7 +83,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
         navigate(location.pathname, { replace: true });
       }
     }
-  }, [variants, location.search]);
+  }, [variants, location.search, location.pathname, navigate]);
 
   useEffect(() => {
     // Filter variants based on search query

@@ -4,7 +4,6 @@ import { useCategories } from '../../hooks/useCategories';
 
 function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
   const [products, setProducts] = useState([]);
-  const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -46,10 +45,6 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
           const limitedProducts = response.data.data.products?.slice(0, limit) || [];
           setProducts(limitedProducts);
           
-          // حفظ الـ banners
-          const categoryBanners = response.data.data.banners || [];
-          setBanners(categoryBanners);
-          
           // تسجيل زيارة الـ category
           try {
             const visitResponse = await recordVisit({
@@ -63,7 +58,6 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
           }
         } else {
           setProducts([]);
-          setBanners([]);
         }
       } catch (err) {
         console.error(`Error fetching ${categoryName} products:`, err);
@@ -75,7 +69,7 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
     };
 
     fetchCategoryProducts();
-  }, [category?.id, categoryName, limit, categoriesLoading]); // استخدام category.id بدلاً من category object
+  }, [category, category?.id, categoryName, limit, categoriesLoading]);
 
   if (loading) {
     return (

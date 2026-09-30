@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FiSearch, FiUser, FiShoppingBag } from "react-icons/fi";
+import { FiSearch, FiUser } from "react-icons/fi";
 import { useAuth } from "../../Context/AuthContext";
 import { useCategories } from "../../hooks/useCategories";
 import { getCategoryById, getProductById } from "../../api/categories";
