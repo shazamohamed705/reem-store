@@ -34,11 +34,7 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
         setLoading(true);
         setError(null);
         
-        console.log(`Fetching products for category ${categoryName} with ID:`, category.id);
-        
-        // جلب منتجات الفئة بالـ ID
         const response = await getCategoryById(category.id);
-        console.log(`${categoryName} category response:`, response.data);
         
         if (response.data && response.data.success && response.data.data) {
           // أخذ عدد محدود من المنتجات

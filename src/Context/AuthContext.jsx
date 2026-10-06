@@ -12,14 +12,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("user");
-      const storedToken = localStorage.getItem("token");
-      
-      console.log("Stored user:", storedUser); // للتشخيص
-      console.log("Stored token:", storedToken); // للتشخيص
       
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        console.log("Parsed user:", parsedUser); // للتشخيص
         setUser(parsedUser);
       }
     } catch (err) {
@@ -33,29 +28,23 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ email, password }) => {
     try {
       const res = await loginRequest({ email, password });
-      
-      console.log("Full API Response:", res); // للتشخيص الكامل
-      console.log("Response data:", res.data); // للتشخيص
 
-      // التحقق من structure البيانات المختلفة
       const userData = res?.data?.user || res?.data?.data?.user || res?.data;
       const tokenData = res?.data?.token || res?.data?.access_token || res?.data?.data?.token;
 
       if (userData && (userData.name || userData.email)) {
-        console.log("Setting user:", userData); // للتشخيص
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
       }
 
       if (tokenData) {
-        console.log("Setting token:", tokenData); // للتشخيص
         localStorage.setItem("token", tokenData);
       }
 
       return res;
     } catch (err) {
-      console.error("Login error:", err); // للتشخيص
-      throw err; // هتتعامل معاه في Login Component
+      console.error("Login error:", err);
+      throw err;
     }
   };
 

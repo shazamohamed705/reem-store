@@ -15,8 +15,6 @@ function Login() {
   // مراقبة تغيير حالة المستخدم
   useEffect(() => {
     if (user && (user.name || user.email)) {
-      console.log("User logged in, navigating to home");
-      // التأكد من الذهاب للـ home بدلاً من الرجوع للصفحة السابقة
       navigate('/', { replace: true });
     }
   }, [user, navigate]);
@@ -41,13 +39,9 @@ function Login() {
   
     try {
       const res = await login(formData); 
-      console.log("Login success:", res.data); // لما تسجيل الدخول ينجح
-      
-      // لا نحتاج لإغلاق المودال هنا لأن useEffect سيتولى ذلك
-      // عند تحديث user state
       
     } catch (err) {
-      console.log("Login failed:", err.response?.data || err);
+      console.error("Login failed:", err.response?.data || err);
       setError(
         err.response?.data?.message || 'Login failed, please check your credentials'
       );

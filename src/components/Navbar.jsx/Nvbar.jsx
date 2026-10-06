@@ -18,18 +18,6 @@ function Navbar({ activeCollection, onSelectCollection }) {
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
 
-  // للتشخيص - طباعة حالة المستخدم عند التحميل
-  useEffect(() => {
-    console.log("Navbar - User state changed:", user?.name || 'No user');
-  }, [user]);
-
-  // جلب الفئات من الـ API
-  useEffect(() => {
-    if (categories.length > 0) {
-      console.log("Categories loaded:", categories.length);
-    }
-  }, [categories]);
-
   // إغلاق الـ dropdown لما يضغط المستخدم خارجها
   useEffect(() => {
     const handleClickOutside = (e) => {

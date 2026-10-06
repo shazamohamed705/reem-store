@@ -30,9 +30,7 @@ function Signup() {
   
     try {
       const res = await register(formData);
-      console.log("REGISTER SUCCESS", res.data);
   
-      // ✅ لو التسجيل ناجح، نروح للـ login بدون background ونمسح الـ history
       navigate("/login", { replace: true });
   
     } catch (err) {
