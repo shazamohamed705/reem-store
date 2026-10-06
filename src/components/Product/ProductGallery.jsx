@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProductById, getCategoryById, recordVisit } from '../../api/categories';
+import { getProductById, getCategoryById } from '../../api/categories';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBags, onOpenClothes, defaultImage = 'https://reem-store.com/images/tshirts.webp' }) {
@@ -41,17 +41,6 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
             }
           }
           
-          // تسجيل زيارة المنتج
-          try {
-            const visitResponse = await recordVisit({
-              type: 'product',
-              id: productData.id
-            });
-            console.log('Visit recorded successfully:', visitResponse.data);
-          } catch (visitError) {
-            // تجاهل أخطاء تسجيل الزيارات - لا تؤثر على عمل الموقع
-            console.error('Failed to record visit:', visitError.response?.data || visitError.message);
-          }
         }
       } catch (err) {
         console.error('Error fetching product:', err);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { getCategoryById, recordVisit } from '../../api/categories';
+import { getCategoryById } from '../../api/categories';
 import { useCategories } from '../../hooks/useCategories';
 
 function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
@@ -44,18 +44,6 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
           // أخذ عدد محدود من المنتجات
           const limitedProducts = response.data.data.products?.slice(0, limit) || [];
           setProducts(limitedProducts);
-          
-          // تسجيل زيارة الـ category
-          try {
-            const visitResponse = await recordVisit({
-              type: 'category',
-              id: category.id
-            });
-            console.log('Visit recorded successfully:', visitResponse.data);
-          } catch (visitError) {
-            // تجاهل أخطاء تسجيل الزيارات - لا تؤثر على عمل الموقع
-            console.error('Failed to record visit:', visitError.response?.data || visitError.message);
-          }
         } else {
           setProducts([]);
         }
