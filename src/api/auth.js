@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://mezna-store.com/backend/api",
+  baseURL: "https://violet-stork-700211.hostingersite.com/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

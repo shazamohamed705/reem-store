@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { getCategoryById } from '../../api/categories';
 import { useCategories } from '../../hooks/useCategories';
+import { useLanguage } from '../../Context/LanguageContext';
 
 function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t } = useLanguage();
   
   const { categories, loading: categoriesLoading } = useCategories();
 
@@ -62,7 +64,7 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
           {displayName || categoryName}
         </h2>
         <div className="text-center py-12">
-          <div className="text-gray-500">Loading products...</div>
+          <div className="text-gray-500">{t.category.loading}</div>
         </div>
       </section>
     );
@@ -75,7 +77,7 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
           {displayName || categoryName}
         </h2>
         <div className="text-center py-12">
-          <div className="text-gray-500">No products available</div>
+          <div className="text-gray-500">{t.category.noProducts}</div>
         </div>
       </section>
     );
@@ -133,7 +135,7 @@ function CategorySection({ categoryName, displayName, onOpenItem, limit = 9 }) {
                   {/* View Details Button */}
                   <div className="mt-4 pt-4 border-t border-white/30">
                     <span className="text-sm tracking-widest uppercase text-white flex items-center">
-                      View Details
+                      {t.category.viewDetails}
                       <svg 
                         className="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform duration-300" 
                         fill="none" 

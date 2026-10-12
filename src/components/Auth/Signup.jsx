@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { register } from "../../api/auth";
+import { useLanguage } from '../../Context/LanguageContext';
 
 
 function Signup() {
@@ -17,6 +18,7 @@ function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.backgroundLocation;
+  const { t } = useLanguage();
 
   const closeModal = () => {
     // الذهاب للـ home مباشرة بدلاً من الرجوع
@@ -72,10 +74,10 @@ function Signup() {
 
         <div className="p-8 pb-6 border-b border-gray-100">
           <h2 className="text-3xl font-light tracking-wider text-gray-900 mb-2">
-            Create Account
+            {t.signup.heading}
           </h2>
           <p className="text-sm font-light text-gray-600">
-            Join Mezna Store for exclusive access
+            {t.signup.subheading}
           </p>
         </div>
 
@@ -83,7 +85,7 @@ function Signup() {
         <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
               <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Full Name
+                {t.signup.nameLabel}
               </label>
               <div className="relative">
                 <svg
@@ -110,7 +112,7 @@ function Signup() {
     setFormData({ ...formData, name: e.target.value })
   }
   className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
-  placeholder="John Doe"
+  placeholder={t.signup.namePlaceholder}
 />
 
               </div>
@@ -118,7 +120,7 @@ function Signup() {
 
             <div>
               <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Email Address
+                {t.signup.emailLabel}
               </label>
               <div className="relative">
                 <svg
@@ -147,7 +149,7 @@ function Signup() {
   }
   className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
 
-  placeholder="your@email.com"
+  placeholder={t.signup.emailPlaceholder}
 />
 
               </div>
@@ -156,7 +158,7 @@ function Signup() {
 
             <div>
               <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Password
+                {t.signup.passwordLabel}
               </label>
               <div className="relative">
                 <svg
@@ -183,7 +185,7 @@ function Signup() {
     setFormData({ ...formData, password: e.target.value })
   }
   className="w-full pl-11 pr-4 py-3 border border-gray-300 ..."
-placeholder='Create a password'
+placeholder={t.signup.passwordPlaceholder}
 />
 
               </div>
@@ -191,7 +193,7 @@ placeholder='Create a password'
 
             <div>
               <label className="block text-xs font-light tracking-wider uppercase text-gray-700 mb-2">
-                Confirm Password
+                {t.signup.confirmLabel}
               </label>
               <div className="relative">
                 <svg
@@ -228,7 +230,7 @@ placeholder='Create a password'
   disabled={loading}
   className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors disabled:opacity-50"
 >
-  {loading ? "Creating..." : "Create Account"}
+  {loading ? t.signup.submitting : t.signup.submit}
 </button>
 
             
@@ -242,16 +244,14 @@ placeholder='Create a password'
 
           <div className="mt-6 text-center">
             <p className="text-sm font-light text-gray-600">
-              Already have an account?
+              {t.signup.hasAccount}
               <button
                 type="button"
                 onClick={() => navigate('/login', { state: { backgroundLocation: background || location } })}
                 className="ml-2 text-gray-900 hover:underline font-normal"
               >
-                Sign In
+                {t.signup.signIn}
               </button>
-
-
             </p>
           </div>
         </div>

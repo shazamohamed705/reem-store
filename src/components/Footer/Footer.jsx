@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSocialLinks } from '../../hooks/useSocialLinks';
+import { useLanguage } from '../../Context/LanguageContext';
 
 function Footer({ activeCollection, onSelectCollection }) {
   const navigate = useNavigate();
   const { socialLinks } = useSocialLinks();
+  const { t } = useLanguage();
   const scrollToSection = (sectionId) => {
     // If we're on a collection page (women, men, kids), go back to default first
     if (['women', 'men', 'kids'].includes(activeCollection)) {
@@ -36,7 +38,7 @@ function Footer({ activeCollection, onSelectCollection }) {
         <div className="max-w-screen-xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-normal tracking-wide mb-4 text-gray-900">
-              Shop By Category
+              {t.footer.shopByCategory}
             </h3>
             <div className="w-24 h-1 bg-gray-900 mx-auto"></div>
           </div>
@@ -48,10 +50,10 @@ function Footer({ activeCollection, onSelectCollection }) {
             >
               <div className="relative z-10">
                 <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
-                  Women
+                  {t.footer.categories.women}
                 </h3>
                 <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
-                  Elegant & Stylish
+                  {t.footer.categories.womenSub}
                 </p>
                 <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
               </div>
@@ -64,10 +66,10 @@ function Footer({ activeCollection, onSelectCollection }) {
             >
               <div className="relative z-10">
                 <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
-                  Men
+                  {t.footer.categories.men}
                 </h3>
                 <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
-                  Classic & Modern
+                  {t.footer.categories.menSub}
                 </p>
                 <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
               </div>
@@ -80,10 +82,10 @@ function Footer({ activeCollection, onSelectCollection }) {
             >
               <div className="relative z-10">
                 <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
-                  Kids
+                  {t.footer.categories.kids}
                 </h3>
                 <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
-                  Fun & Comfortable
+                  {t.footer.categories.kidsSub}
                 </p>
                 <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
               </div>
@@ -96,10 +98,10 @@ function Footer({ activeCollection, onSelectCollection }) {
             >
               <div className="relative z-10">
                 <h3 className="text-3xl font-normal tracking-widest uppercase text-gray-900 group-hover:text-white transition-colors duration-500 mb-3">
-                  All
+                  {t.footer.categories.all}
                 </h3>
                 <p className="text-sm tracking-wide font-normal text-gray-800 group-hover:text-white/80 transition-colors duration-500">
-                  Browse Everything
+                  {t.footer.categories.allSub}
                 </p>
                 <div className="mt-6 w-12 h-0.5 bg-gray-900 group-hover:bg-white group-hover:w-full transition-all duration-500"></div>
               </div>
@@ -115,17 +117,17 @@ function Footer({ activeCollection, onSelectCollection }) {
           {/* About Mezna Store */}
           <div className="col-span-2 lg:col-span-1">
             <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
-              About Mezna Store
+              {t.footer.about.heading}
             </h3>
             <p className="text-xs sm:text-sm font-normal text-gray-800 leading-relaxed">
-              Premium quality, authentic products identical to originals. Experience luxury with our curated collections.
+              {t.footer.about.desc}
             </p>
           </div>
 
           {/* Customer Service */}
           <div>
             <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
-              Customer Service
+              {t.footer.customerService.heading}
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
@@ -133,7 +135,7 @@ function Footer({ activeCollection, onSelectCollection }) {
                   onClick={() => navigate('/page/contact')}
                   className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
-                  Contact Us
+                  {t.footer.customerService.contact}
                 </button>
               </li>
               <li>
@@ -141,7 +143,7 @@ function Footer({ activeCollection, onSelectCollection }) {
                   onClick={() => navigate('/page/shipping')}
                   className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
-                  Shipping
+                  {t.footer.customerService.shipping}
                 </button>
               </li>
               <li>
@@ -149,7 +151,7 @@ function Footer({ activeCollection, onSelectCollection }) {
                   onClick={() => navigate('/page/returns')}
                   className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
-                  Returns
+                  {t.footer.customerService.returns}
                 </button>
               </li>
               <li>
@@ -157,7 +159,7 @@ function Footer({ activeCollection, onSelectCollection }) {
                   onClick={() => navigate('/page/faq')}
                   className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
                 >
-                  FAQ
+                  {t.footer.customerService.faq}
                 </button>
               </li>
             </ul>
@@ -166,39 +168,27 @@ function Footer({ activeCollection, onSelectCollection }) {
           {/* Shop */}
           <div>
             <h3 className="text-xs sm:text-sm font-medium tracking-widest uppercase text-gray-900 mb-4 sm:mb-6">
-              Shop
+              {t.footer.shop.heading}
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <button
-                  onClick={() => scrollToSection('women')}
-                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
-                >
-                  Women
+                <button onClick={() => scrollToSection('women')} className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full">
+                  {t.footer.shop.women}
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection('men')}
-                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
-                >
-                  Men
+                <button onClick={() => scrollToSection('men')} className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full">
+                  {t.footer.shop.men}
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection('kids')}
-                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
-                >
-                  Kids
+                <button onClick={() => scrollToSection('kids')} className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full">
+                  {t.footer.shop.kids}
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => scrollToSection('collections')}
-                  className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full"
-                >
-                  Collections
+                <button onClick={() => scrollToSection('collections')} className="text-xs sm:text-sm font-normal text-gray-800 hover:text-gray-900 transition-colors text-left w-full">
+                  {t.footer.shop.collections}
                 </button>
               </li>
             </ul>
@@ -263,16 +253,16 @@ function Footer({ activeCollection, onSelectCollection }) {
               )}
             </div>
             <p className="text-xs sm:text-sm font-normal text-gray-800 mb-2">
-              Cash on Delivery Available
+              {t.footer.badges.cod}
             </p>
             <p className="text-xs sm:text-sm font-normal text-gray-800 mb-6">
-              Easy Returns Within 3 Days T&C Applied
+              {t.footer.badges.returns}
             </p>
             
             {/* Payment Methods */}
             <div className="mt-6">
               <h4 className="text-xs font-medium tracking-widest uppercase text-gray-900 mb-3">
-                We Accept
+                {t.footer.badges.weAccept}
               </h4>
               <div className="flex flex-wrap gap-4">
                 {/* Payment Icons */}
@@ -314,7 +304,7 @@ function Footer({ activeCollection, onSelectCollection }) {
         {/* Copyright */}
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
           <p className="text-xs font-normal text-gray-700 text-center">
-            © 2025 Mezna Store. All rights reserved.
+            {t.footer.copyright}
           </p>
         </div>
       </div>

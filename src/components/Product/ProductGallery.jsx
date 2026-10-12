@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getProductById, getCategoryById } from '../../api/categories';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../../Context/LanguageContext';
 
 function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBags, onOpenClothes, defaultImage = 'https://reem-store.com/images/tshirts.webp' }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +15,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
   const [loadedImages, setLoadedImages] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!productId) {
@@ -110,12 +112,12 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
   };
 
   const menuItems = [
-    { label: 'Home', action: onBack },
+    { label: t.product.home, action: onBack },
     ...categoryProducts.map(prod => ({
       label: prod.name,
       action: () => navigate(`/product/${prod.id}`)
     })),
-    { label: 'Returns', action: onBack }
+    { label: t.product.returns, action: onBack }
   ];
 
   return (
@@ -129,7 +131,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
               onClick={onBack}
               className="text-xl sm:text-2xl font-light tracking-widest text-black hover:text-gray-600 transition-colors"
             >
-              MEZNA STORE
+              {t.product.storeName}
             </button>
             
             {/* Desktop Menu */}
@@ -164,7 +166,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
           <div className="hidden sm:flex items-center gap-3 pb-4">
             <input
               type="text"
-              placeholder="Search brands (e.g., Gucci, Chanel, Louis Vuitton)"
+              placeholder={t.product.searchDesktop}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={(e) => {
@@ -178,7 +180,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
               onClick={handleSearch}
               className="px-6 py-2 bg-black text-white text-sm font-medium tracking-wider hover:bg-gray-800 transition-colors"
             >
-              Search
+              {t.product.search}
             </button>
           </div>
         </div>
@@ -208,7 +210,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
           <div className="flex items-center gap-2">
             <input
               type="text"
-              placeholder="Search brands..."
+              placeholder={t.product.searchMobile}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={(e) => {
@@ -222,7 +224,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
               onClick={handleSearch}
               className="px-4 py-2 bg-black text-white text-sm font-medium hover:bg-gray-800"
             >
-              Search
+              {t.product.search}
             </button>
           </div>
         </div>
@@ -232,16 +234,16 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
         {loading ? (
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900 mx-auto mb-4"></div>
-            <div className="text-gray-600">Loading...</div>
+            <div className="text-gray-600">{ t.product.loading }</div>
           </div>
         ) : error || !product ? (
           <div className="text-center py-20">
-            <div className="text-red-500 text-lg mb-6">{error || 'Product not found'}</div>
+            <div className="text-red-500 text-lg mb-6">{error || t.product.notFound}</div>
             <button
               onClick={onBack}
               className="px-8 py-3 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
             >
-              Back to Home
+              {t.product.backHome}
             </button>
           </div>
         ) : (
@@ -256,11 +258,11 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
             
             {variants.length === 0 ? (
               <div className="text-center py-20">
-                <div className="text-gray-600 text-lg">No variants available for this product</div>
+                <div className="text-gray-600 text-lg">{t.product.noVariants}</div>
               </div>
             ) : filteredVariants.length === 0 ? (
               <div className="text-center py-20">
-                <div className="text-gray-600 text-lg">No results found for "{searchQuery}"</div>
+                <div className="text-gray-600 text-lg">{t.product.noResults} "{searchQuery}"</div>
                 <button
                   onClick={() => {
                     setSearchQuery('');
@@ -268,7 +270,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
                   }}
                   className="mt-6 px-6 py-2 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-all duration-300"
                 >
-                  Clear Search
+                  {t.product.clearSearch}
                 </button>
               </div>
             ) : (
@@ -283,7 +285,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
                       {/* Skeleton Loader - يظهر لحد ما الصورة تتحمل */}
                       {!loadedImages[variant.id] && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-                          <div className="text-gray-400">Loading...</div>
+                          <div className="text-gray-400">{t.product.loading}</div>
                         </div>
                       )}
                       
@@ -346,7 +348,7 @@ function ProductGallery({ onBack, productId, columns = 2, onOpenShoes, onOpenBag
                           {variant.google_photo_link && (
                             <div className="mt-4 pt-4 border-t border-white/30">
                               <span className="text-sm tracking-widest uppercase text-white flex items-center">
-                                View Collection
+                                {t.product.viewCollection}
                                 <svg 
                                   className="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform duration-300" 
                                   fill="none" 

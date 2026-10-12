@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FiSearch, FiUser } from "react-icons/fi";
 import { useAuth } from "../../Context/AuthContext";
+import { useLanguage } from "../../Context/LanguageContext";
 import { useCategories } from "../../hooks/useCategories";
 import { getCategoryById, getProductById } from "../../api/categories";
 
@@ -14,6 +15,7 @@ function Navbar({ activeCollection, onSelectCollection }) {
   const location = useLocation();
 
   const { user, logout } = useAuth();
+  const { t, lang, toggleLang, isRTL } = useLanguage();
   const { categories, loading } = useCategories();
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
@@ -45,7 +47,6 @@ function Navbar({ activeCollection, onSelectCollection }) {
     logout();
     setIsUserDropdownOpen(false);
   };
-
   const handleNavClick = (categoryName) => {
     onSelectCollection(categoryName.toLowerCase());
     setIsMenuOpen(false);
@@ -88,7 +89,7 @@ function Navbar({ activeCollection, onSelectCollection }) {
       }
       
       // لو مفيش نتائج
-      alert('No results found for "' + searchQuery + '"');
+      alert(`${t.navbar.noResults} "${searchQuery}"`);
       setSearchQuery('');
     } catch (error) {
       console.error('Search error:', error);
@@ -121,12 +122,21 @@ function Navbar({ activeCollection, onSelectCollection }) {
 
             {/* Logo */}
             <a href="/" className="text-2xl font-light tracking-widest text-gray-900">
-              MEZNA STORE
+              {t.navbar.storeName}
             </a>
           </div>
 
           {/* Icons */}
           <div className="flex items-center gap-4 sm:gap-6 relative">
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLang}
+              className="text-sm font-light tracking-wider text-gray-700 hover:text-gray-900 transition-colors border border-gray-300 hover:border-gray-900 px-2 py-1 rounded"
+              aria-label="Toggle language"
+            >
+              {lang === 'en' ? 'ع' : 'EN'}
+            </button>
+
             {/* Search */}
             <div className="relative" ref={searchRef}>
               <button 
@@ -138,11 +148,11 @@ function Navbar({ activeCollection, onSelectCollection }) {
               </button>
 
               {isSearchOpen && (
-                <div className="absolute right-0 top-full mt-2 w-64 sm:w-80 bg-white border border-gray-200 shadow-lg z-50 rounded-lg p-3">
+                <div className={`absolute ${isRTL ? 'left-0' : 'right-0'} top-full mt-2 w-64 sm:w-80 bg-white border border-gray-200 shadow-lg z-50 rounded-lg p-3`}>
                   <div className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="Search brands..."
+                      placeholder={t.navbar.searchPlaceholder}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyPress={(e) => {
@@ -157,7 +167,7 @@ function Navbar({ activeCollection, onSelectCollection }) {
                       onClick={handleSearch}
                       className="px-4 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-800"
                     >
-                      Search
+                      {t.navbar.search}
                     </button>
                   </div>
                 </div>
@@ -173,7 +183,7 @@ function Navbar({ activeCollection, onSelectCollection }) {
               >
                 <FiUser className="w-5 h-5 sm:w-6 sm:h-6" />
                 <span className="hidden sm:block text-sm font-light text-gray-900">
-                  {user && (user.name || user.email) ? (user.name || user.email.split('@')[0]) : "Guest"}
+                  {user && (user.name || user.email) ? (user.name || user.email.split('@')[0]) : t.navbar.guest}
                 </span>
               </button>
 
@@ -189,7 +199,7 @@ function Navbar({ activeCollection, onSelectCollection }) {
                       className="w-full px-4 py-3 text-left text-sm font-light text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3"
                       onClick={handleLogout}
                     >
-                      Logout
+                      {t.navbar.logout}
                     </button>
                   </div>
                 </div>
@@ -205,23 +215,27 @@ function Navbar({ activeCollection, onSelectCollection }) {
         <div className={`pt-4 pb-4 ${isMenuOpen ? "block" : "hidden"} lg:block`}>
           <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8">
             {loading ? (
-              <div className="text-gray-500">Loading...</div>
+              <div className="text-gray-500">{t.navbar.loading}</div>
             ) : (
-              categories.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => handleNavClick(category.name)}
-                  className={`text-base font-light tracking-wider uppercase transition-colors ${
-                    activeCollection === category.name.toLowerCase()
-                      ? "text-gray-900 border-b border-gray-900 pb-1"
-                      : "text-gray-900 hover:text-gray-600"
-                  }`}
-                >
-                  {category.name === 'Collections' ? 'Collections' : 
-                   category.name.charAt(0).toUpperCase() + category.name.slice(1)}
-                </button>
-              ))
+              categories.map((category) => {
+                const key = category.name.toLowerCase();
+                const translatedName = t.navbar.categoryNames[key]
+                  || category.name.charAt(0).toUpperCase() + category.name.slice(1);
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() => handleNavClick(category.name)}
+                    className={`text-base font-light tracking-wider uppercase transition-colors ${
+                      activeCollection === category.name.toLowerCase()
+                        ? "text-gray-900 border-b border-gray-900 pb-1"
+                        : "text-gray-900 hover:text-gray-600"
+                    }`}
+                  >
+                    {translatedName}
+                  </button>
+                );
+              })
             )}
           </div>
         </div>

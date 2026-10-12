@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-ro
 import { HelmetProvider } from 'react-helmet-async';
 // أعلى App.js
 import { AuthProvider } from './Context/AuthContext';
+import { LanguageProvider } from './Context/LanguageContext';
 import MetaPixel from './components/MetaPixel';
 import SEO from './components/SEO';
 
@@ -113,10 +114,12 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <AuthProvider>
-          <MetaPixel />
-          <AppContent />
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <MetaPixel />
+            <AppContent />
+          </AuthProvider>
+        </LanguageProvider>
       </BrowserRouter>
     </HelmetProvider>
   );

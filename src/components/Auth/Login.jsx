@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../Context/AuthContext'; // تأكدي المسار صح
+import { useAuth } from '../../Context/AuthContext';
+import { useLanguage } from '../../Context/LanguageContext';
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.backgroundLocation;
 
-  const { login, user } = useAuth(); // إضافة user للمراقبة
+  const { login, user } = useAuth();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,10 +78,10 @@ function Login() {
         {/* Header */}
         <div className="p-8 pb-6 border-b border-gray-100">
           <h2 className="text-3xl font-light tracking-wider text-gray-900 mb-2">
-            Welcome Back
+            {t.login.heading}
           </h2>
           <p className="text-sm font-light text-gray-600">
-            Sign in to access your account
+            {t.login.subheading}
           </p>
         </div>
 
@@ -90,7 +92,7 @@ function Login() {
               required
               type="email"
               name="email"
-              placeholder="your@email.com"
+              placeholder={t.login.emailPlaceholder}
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -102,7 +104,7 @@ function Login() {
               required
               type="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder={t.login.passwordPlaceholder}
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -119,14 +121,14 @@ function Login() {
               disabled={isSubmitting}
               className="w-full bg-gray-900 text-white py-3 text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-colors disabled:opacity-50"
             >
-              {isSubmitting ? 'Signing in...' : 'Sign In'}
+              {isSubmitting ? t.login.submitting : t.login.submit}
             </button>
           </form>
 
           {/* Sign Up */}
           <div className="mt-6 text-center">
             <p className="text-sm font-light text-gray-600">
-              Don't have an account?
+              {t.login.noAccount}
               <button
                 type="button"
                 onClick={() =>
@@ -136,7 +138,7 @@ function Login() {
                 }
                 className="ml-2 text-gray-900 hover:underline font-normal"
               >
-                Sign Up
+                {t.login.signUp}
               </button>
             </p>
           </div>

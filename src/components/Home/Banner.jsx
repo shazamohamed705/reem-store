@@ -1,25 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { collectionData } from './collectionData';
+import { buildCollectionData } from './collectionData';
 import { useCategories } from '../../hooks/useCategories';
 import { getCategoryById } from '../../api/categories';
-
-const baseSlides = [
-  collectionData.default,
-  {
-    image: '/header2.webp',
-    title: 'Quality Fashion',
-    description: 'Premium quality clothing for every occasion',
-    buttonText: 'Explore'
-  }
-];
+import { useLanguage } from '../../Context/LanguageContext';
 
 function Banner({ activeCollection, onOpenItem }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [categoryImages, setCategoryImages] = useState({});
   const [, setLoading] = useState(false);
+  const { t } = useLanguage();
 
   const { categories, loading: categoriesLoading } = useCategories();
 
+  const collectionData = buildCollectionData(t);
   const activeSlide = collectionData[activeCollection] || collectionData.default;
   
   // جلب صور الفئات من الـ API
@@ -65,6 +58,17 @@ function Banner({ activeCollection, onOpenItem }) {
   const isCollectionPage = ['women', 'men', 'kids'].includes(activeCollection);
   
   const slides = useMemo(() => {
+    const collectionData = buildCollectionData(t);
+    const baseSlides = [
+      collectionData.default,
+      {
+        image: '/header2.webp',
+        title: t.banner.slide2.title,
+        description: t.banner.slide2.subtitle,
+        buttonText: t.banner.slide2.cta,
+      },
+    ];
+
     if (isCollectionPage) {
       // إذا كان collection page، استخدم صورة الـ category من الـ API
       const categoryImage = categoryImages[activeCollection];
@@ -98,7 +102,7 @@ function Banner({ activeCollection, onOpenItem }) {
       seen.add(key);
       return true;
     });
-  }, [activeSlide, isCollectionPage, categoryImages, activeCollection]);
+  }, [activeSlide, isCollectionPage, categoryImages, activeCollection, t]);
 
   useEffect(() => {
     setCurrentSlide(0);
